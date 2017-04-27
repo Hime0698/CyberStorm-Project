@@ -15,11 +15,13 @@ class game(object):
         self.questions3 = {} # load the picture with the questions and answers and the right answers
         self.questions4 = {} # load the picture with the questions and answers and the right answers
         self.currentteam = "None"
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(23, GPIO.IN) #placeholder pin number for a
-        GPIO.setup(16, GPIO.IN) #placeholder pin number for b
-        GPIO.setup(24, GPIO.IN) #placeholder pin number for c
-        GPIO.setup(12, GPIO.IN) #placeholder pin number for d
+        GPIO.setmode(GPIO.BCM) # sets up the GPIO pins
+        GPIO.setup(23, GPIO.IN) # placeholder pin number for a
+        GPIO.setup(16, GPIO.IN) # placeholder pin number for b
+        GPIO.setup(24, GPIO.IN) # placeholder pin number for c
+        GPIO.setup(12, GPIO.IN) # placeholder pin number for d
+        GPIO.setup(10, GPIO.OUT) # GPIO pin for green LED
+        GPIO.setup(11, GPIO.OUT)# GPIO pin for red LED
 
     def setupGUI(self):
         pass
@@ -27,51 +29,56 @@ class game(object):
 
     def PlayGame(self):
         wronganswers = 0
-        while (wronganswers < 3):
+        while (wronganswers < 3): #continues to run through the catagories and selections as long as there are less than three wrong answers
+            GPIO.output(10, False)
+            GPIO.output(11, True)
             "display the catagory screen"
             print "please select catagory"
             if GPIO.input(23): #subrutine for checking catagory one
                 currentquestion = random.choice(questions1.keys())
                 "display image stored in current question"
                 if "GPIO input for answer" == questions1[currentquestion]:
-                    "green led on"
+                    GPIO.output(10, True) # Green LED on
                     self.teams[self.currentteam] += 1
                 else:
-                    "red LED on"
+                    GPIO.output(11, True) # Red LED on
                     wronganswers += 1
                     
             elif GPIO.input(16):#subrutine for checking catagory two
                 currentquestion = random.choice(questions2.keys())
                 "display image stored in current question"
                 if "GPIO input for answer" == questions3[currentquestion]:
-                    "green led on"
+                    GPIO.output(10, True) # Green LED on
                     self.teams[self.currentteam] += 1
                 else:
-                    "red LED on"
+                    GPIO.output(11, True) # Red LED on
                     wronganswers += 1
                     
             elif GPIO.input(24):#subrutine for checking catagory three
                 currentquestion = random.choice(questions3.keys())
                 "display image stored in current question"
                 if "GPIO input for answer" == questions3[currentquestion]:
-                    "green led on"
+                    GPIO.output(10, True) # Green LED on
                     self.teams[self.currentteam] += 1
                 else:
-                    "red LED on"
+                    GPIO.output(11, True) # Red LED on
                     wronganswers += 1
 
             elif GPIO.input(12):#subrutine for checking catagory four
                 currentquestion = random.choice(questions4.keys())
                 "display image stored in current question"
                 if "GPIO input for answer" == questions4[currentquestion]:
-                    "green led on"
+                    GPIO.output(10, True) # Green LED on
                     self.teams[self.currentteam] += 1
                 else:
-                    "red LED on"
+                    GPIO.output(11, True) # Red LED on
                     wronganswers += 1
 
             else:
+                GPIO.output(11, True) # Red LED on
                 print "Invalid Selection"
+        GPIO.output(10, False) # Green LED off
+        GPIO.output(11, True) # Red LED off
         print "Game Over!"
         intermission()
                 
@@ -87,5 +94,5 @@ class game(object):
         #display the instructions picture
 
 ####################################################################################################################
-
+  
 
