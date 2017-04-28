@@ -1,7 +1,7 @@
 ###############################################################################
 #Names: Jacob Sennett, Nolan Lofton, Cotton Richardson, Tyler Nelson
 #Date:
-#Description:
+#Description: A program for runniung a csc themed game show with a running leaderboard
 ##############################################################################
 import random
 import RPi.GPIO as GPIO
@@ -25,7 +25,7 @@ class game(object):
 
     def setupGUI(self):
         pass
-        #set up the gui
+        "set up the gui here"
 
     def PlayGame(self):
         wronganswers = 0
