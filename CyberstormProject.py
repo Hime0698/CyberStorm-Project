@@ -11,7 +11,7 @@ from time import sleep
 class game(object):
     def __init__(self):
         self.teams = {} # Holds team names and scores
-        self.questions1 = {} # load the picture with the questions and answers and the right answer
+        self.questions1 = {"pic.gif":27} # load the picture with the questions and answers and the right answer
         self.questions2 = {} # load the picture with the questions and answers and the right answer
         self.questions3 = {} # load the picture with the questions and answers and the right answer
         self.questions4 = {} # load the picture with the questions and answers and the right answer
@@ -22,6 +22,10 @@ class game(object):
         GPIO.setmode(GPIO.BCM) # sets up the GPIO pins
         GPIO.setup(self.buttons, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)#sets pin mode for the buttons
         GPIO.setup(self.led, GPIO.OUT) #sets pin mode for the leds
+        self.CatScreen = "Catagory screen picture"
+        self.intermission = "interission pic"
+        self.Gameover = "end pic"
+        
 
     def setupGUI(self):
         "set up the gui here"
@@ -40,7 +44,7 @@ class game(object):
         while ((wronganswers < 3) and (len(self.questions1) + len(self.questions2) + len(self.questions3) + len(self.questions4) > 0)): #continues to run through the catagories and selections as long as there are less than three wrong answers
             GPIO.output(self.led[1], False) # red led off
             GPIO.output(self.led[0], False) # Green Led Off
-            "display the catagory screen"
+            "display the catagory screen" #sotred at self.CatScreen
             print "please select catagory"
             if ButtonPressed() == self.buttons[0]: #subrutine for checking catagory one
                 if len(self.questions1) < 1): # Contingent for all questions in this catagory having been attempted
@@ -115,13 +119,16 @@ class game(object):
                 print "Invalid Selection"
         GPIO.output(self.led[1], False) # Green LED off
         GPIO.output(self.led[2], True) # Red LED off
+        "display game over screen" #stored at self.Gameover
         print "Game Over!"
+        sleep(5)
         intermission()
                 
             
         #code for the game goes here
 
     def intermission(self):
+        "display intermission screen" #stored at self.intermission
         for key, value in teams.items():
             print "{}: {}/80".format(key, value)
         print "type in team name in quotes"
